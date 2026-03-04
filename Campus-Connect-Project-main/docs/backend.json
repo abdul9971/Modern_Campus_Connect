@@ -1,0 +1,135 @@
+{
+  "entities": {
+    "Admin": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Admin",
+      "type": "object",
+      "description": "Represents an administrator user in the CampusConnect application.",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the Admin entity." },
+        "username": { "type": "string", "description": "Username for the administrator." },
+        "name": { "type": "string", "description": "Full name of the administrator." },
+        "email": { "type": "string", "description": "Email address of the administrator.", "format": "email" },
+        "phoneNumber": { "type": "string", "description": "Phone number of the administrator." },
+        "photoURL": { "type": "string", "description": "URL of the administrator's profile picture." }
+      },
+      "required": ["id", "username", "name", "email"]
+    },
+    "Teacher": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Teacher",
+      "type": "object",
+      "description": "Represents a teacher user in the CampusConnect application.",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the Teacher entity." },
+        "username": { "type": "string", "description": "Username for the teacher." },
+        "name": { "type": "string", "description": "Full name of the teacher." },
+        "dateOfBirth": { "type": "string", "description": "Date of birth of the teacher.", "format": "date-time" },
+        "phoneNumber": { "type": "string", "description": "Phone number of the teacher." },
+        "address": { "type": "string", "description": "Address of the teacher." },
+        "photoURL": { "type": "string", "description": "URL of the teacher's profile picture." },
+        "email": { "type": "string", "description": "Email address of the teacher.", "format": "email" },
+        "disabled": { "type": "boolean", "description": "If true, the user account is disabled." }
+      },
+      "required": ["id", "username", "name", "email"]
+    },
+    "Student": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Student",
+      "type": "object",
+      "description": "Represents a student user in the CampusConnect application.",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the Student entity." },
+        "username": { "type": "string", "description": "Username for the student." },
+        "name": { "type": "string", "description": "Full name of the student." },
+        "dateOfBirth": { "type": "string", "description": "Date of birth of the student.", "format": "date-time" },
+        "class": { "type": "string", "description": "Class of the student." },
+        "phoneNumber": { "type": "string", "description": "Phone number of the student." },
+        "address": { "type": "string", "description": "Address of the student." },
+        "photoURL": { "type": "string", "description": "URL of the student's profile picture." },
+        "email": { "type": "string", "description": "Email address of the student.", "format": "email" },
+        "disabled": { "type": "boolean", "description": "If true, the user account is disabled." }
+      },
+      "required": ["id", "username", "name", "class", "email"]
+    },
+    "Timetable": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Timetable",
+      "type": "object",
+      "description": "Represents a timetable for a specific day.",
+      "properties": {
+        "id": { "type": "string", "description": "Unique ID, usually in the format YYYY-MM-DD." },
+        "date": { "type": "string", "description": "The date for this timetable in YYYY-MM-DD format." },
+        "day": { "type": "string", "description": "The day of the week (e.g., 'Monday')." },
+        "createdBy": { "type": "string", "description": "The UID of the admin who created/updated this timetable." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp of creation/update." }
+      },
+      "required": ["id", "date", "day", "createdBy", "createdAt"]
+    },
+    "TimetableEntry": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "TimetableEntry",
+      "type": "object",
+      "description": "Represents a single lecture cell within a timetable.",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the TimetableEntry entity." },
+        "class": { "type": "string", "description": "The class for which the entry is applicable." },
+        "subject": { "type": "string", "description": "The subject for the lecture." },
+        "teacherName": { "type": "string", "description": "The name of the teacher assigned to this lecture." },
+        "timeSlot": { "type": "string", "description": "The time slot for the lecture (e.g., '07:40')." },
+        "date": { "type": "string", "description": "The date of the lecture in YYYY-MM-DD format." },
+        "day": { "type": "string", "description": "The day of the week." },
+        "room": { "type": "string", "description": "Optional room number for the lecture." },
+        "teacherId": { "type": "string", "description": "Optional UID of the teacher, if mapped." }
+      },
+      "required": ["id", "class", "subject", "teacherName", "timeSlot", "date", "day"]
+    },
+    "AttendanceRecord": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "AttendanceRecord",
+      "type": "object",
+      "description": "Represents a student's attendance record for a specific lecture.",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the AttendanceRecord entity." },
+        "studentId": { "type": "string", "description": "Reference to Student." },
+        "timetableEntryId": { "type": "string", "description": "Reference to TimetableEntry." },
+        "teacherId": { "type": "string", "description": "Reference to the Teacher who took the attendance." },
+        "classId": { "type": "string", "description": "The class of the student at the time of the record." },
+        "date": { "type": "string", "description": "The date of the lecture in YYYY-MM-DD format." },
+        "status": { "type": "string", "description": "The attendance status (Present, Absent, Pending)." },
+        "subject": { "type": "string", "description": "The subject of the lecture." },
+        "timeSlot": { "type": "string", "description": "The time slot of the lecture." }
+      },
+      "required": ["id", "studentId", "timetableEntryId", "teacherId", "classId", "date", "status", "subject", "timeSlot"]
+    }
+  },
+  "auth": {
+    "providers": ["password", "anonymous"]
+  },
+  "firestore": {
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/Admin" },
+      "description": "Stores administrator user profiles."
+    },
+    "/teachers/{teacherId}": {
+      "schema": { "$ref": "#/entities/Teacher" },
+      "description": "Stores teacher user profiles."
+    },
+    "/students/{studentId}": {
+      "schema": { "$ref": "#/entities/Student" },
+      "description": "Stores student user profiles."
+    },
+    "/timetables/{timetableId}": {
+      "schema": { "$ref": "#/entities/Timetable" },
+      "description": "Stores timetable container documents for a specific day."
+    },
+    "/timetableEntries/{timetableEntryId}": {
+      "schema": { "$ref": "#/entities/TimetableEntry" },
+      "description": "Stores individual lecture entries."
+    },
+    "/attendanceRecords/{attendanceRecordId}": {
+      "schema": { "$ref": "#/entities/AttendanceRecord" },
+      "description": "Stores attendance records for each student and lecture."
+    }
+  }
+}

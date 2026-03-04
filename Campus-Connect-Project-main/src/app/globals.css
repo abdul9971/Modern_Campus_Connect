@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Luxury minimal scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prevent layout shift during canvas load */
+canvas {
+  display: block;
+}
+
+/* Remove default margin */
+body {
+  margin: 0;
+  background: #0d1117;
+}
+
+/* Gradient text utility */
+.text-gradient-blue {
+  background: linear-gradient(135deg, #4a9eff, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Card glow effects */
+.card-glow-blue {
+  box-shadow: 0 0 40px rgba(74, 158, 255, 0.15);
+}
+.card-glow-purple {
+  box-shadow: 0 0 40px rgba(167, 139, 250, 0.15);
+}
+.card-glow-green {
+  box-shadow: 0 0 40px rgba(52, 211, 153, 0.15);
+}

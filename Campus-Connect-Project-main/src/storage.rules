@@ -1,0 +1,28 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      // Check if the user is in the 'admins' collection in Firestore
+      return isSignedIn() && exists(/databases/(default)/documents/admins/$(request.auth.uid));
+    }
+
+    // Rule for final profile images after user has been created
+    match /profile-images/{role}/{userId}/{fileName} {
+      // Allow any signed-in user to read profile images.
+      // Access is controlled by unguessable download URLs stored in Firestore.
+      allow read: if isSignedIn();
+
+      // Only an Admin can create or update profile photos.
+      // This rule is used when creating a new user.
+      allow write: if isAdmin() &&
+                      request.resource.size < 100 * 1024 &&
+                      request.resource.contentType.matches('image/.*');
+    }
+  }
+}
